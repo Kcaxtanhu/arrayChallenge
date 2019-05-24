@@ -1,23 +1,39 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Trand4It.Challenge.Arrays
+namespace Trend4It.Challenge.Arrays
 {
     public class ArrayWorker
     {
-        public static HashSet<string> CheckDivisible(int[] numbersList)
+        public static List<Tuple<int,int>> CheckDivisible(int[] numbersList)
         {
-            var pairs = new HashSet<string>();
+            if (numbersList == null || numbersList.Length < 1 || !numbersList.Any())
+                throw new Exception("The array parameter provided doesn't contain any value");
 
-            foreach (var number in numbersList)
+            var pairs = new List<Tuple<int, int>>();
+
+            for (int d = 0; d < numbersList.Length; d++)
             {
                 for (int i = 0; i < numbersList.Length; i++)
                 {
-                    if (number % numbersList[i] == 0)
+                    try
                     {
-                        Console.WriteLine($"{ number } div { numbersList[i] }");
-                        pairs.Add($"{ number }-{ numbersList[i] }");
+                        if (numbersList[d] % numbersList[i] == 0 && numbersList[d] != 0)
+                        {
+                            Console.WriteLine($"{ numbersList[d] } div { numbersList[i] }");
+                            pairs.Add(new Tuple<int, int>(numbersList[d], numbersList[i]));
+                        }
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        Console.WriteLine($"Divisio on { numbersList[d] } by { numbersList[i] } ignored");
+                        continue;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
                     }
                 }
             }
@@ -25,18 +41,33 @@ namespace Trand4It.Challenge.Arrays
             return pairs;
         }
 
-        public static HashSet<string> CheckNotRepeatedDivisible(int[] numbersList)
+        public static HashSet<Tuple<int, int>> CheckNotRepeatedDivisible(int[] numbersList)
         {
-            var pairs = new HashSet<string>();
+            if (numbersList == null || numbersList.Length < 1 || !numbersList.Any())
+                throw new Exception("The array parameter provided doesn't contain any value");
 
-            foreach (var number in numbersList)
+            var pairs = new HashSet<Tuple<int,int>>();
+
+            for (int d = 0; d < numbersList.Length; d++)
             {
                 for (int i = 0; i < numbersList.Length; i++)
                 {
-                    if (number % numbersList[i] == 0 && !pairs.Contains($"{ number }-{ numbersList[i] }"))
+                    try
                     {
-                        Console.WriteLine($"{ number } div { numbersList[i] }");
-                        pairs.Add($"{ number }-{ numbersList[i] }");
+                        if (numbersList[d] % numbersList[i] == 0 && pairs.Where(p => p.Item1 == numbersList[d] && p.Item2 == numbersList[i]).Count() < 1 && numbersList[d] != 0)
+                        {
+                            Console.WriteLine($"{ numbersList[d] } div { numbersList[i] }");
+                            pairs.Add(new Tuple<int, int>(numbersList[d], numbersList[i]));
+                        }
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        Console.WriteLine($"Divisio on { numbersList[d] } by { numbersList[i] } ignored");
+                        continue;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
                     }
                 }
             }
