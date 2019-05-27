@@ -10,7 +10,7 @@ namespace Trend4It.Challenge.Arrays
         public static List<Tuple<int,int>> CheckDivisible(int[] numbersList)
         {
             if (numbersList == null || numbersList.Length < 1 || !numbersList.Any())
-                throw new Exception("The array parameter provided doesn't contain any value");
+                throw new ArgumentException("The array parameter provided doesn't contain any value", "numbersList");
 
             var pairs = new List<Tuple<int, int>>();
 
@@ -28,12 +28,8 @@ namespace Trend4It.Challenge.Arrays
                     }
                     catch (DivideByZeroException)
                     {
-                        Console.WriteLine($"Divisio on { numbersList[d] } by { numbersList[i] } ignored");
+                        Console.WriteLine($"Division of { numbersList[d] } by { numbersList[i] } ignored");
                         continue;
-                    }
-                    catch (Exception)
-                    {
-                        throw;
                     }
                 }
             }
@@ -44,7 +40,7 @@ namespace Trend4It.Challenge.Arrays
         public static HashSet<Tuple<int, int>> CheckNotRepeatedDivisible(int[] numbersList)
         {
             if (numbersList == null || numbersList.Length < 1 || !numbersList.Any())
-                throw new Exception("The array parameter provided doesn't contain any value");
+                throw new ArgumentException("The array parameter provided doesn't contain any value", "numbersList");
 
             var pairs = new HashSet<Tuple<int,int>>();
 
@@ -62,12 +58,8 @@ namespace Trend4It.Challenge.Arrays
                     }
                     catch (DivideByZeroException)
                     {
-                        Console.WriteLine($"Divisio on { numbersList[d] } by { numbersList[i] } ignored");
+                        Console.WriteLine($"Division of { numbersList[d] } by { numbersList[i] } ignored");
                         continue;
-                    }
-                    catch (Exception)
-                    {
-                        throw;
                     }
                 }
             }
